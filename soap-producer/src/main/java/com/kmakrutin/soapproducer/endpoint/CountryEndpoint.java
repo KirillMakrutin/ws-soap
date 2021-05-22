@@ -29,10 +29,11 @@ public class CountryEndpoint {
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getCountryRequest")
     @ResponsePayload
     public GetCountryResponse getCountry(@RequestPayload GetCountryRequest request) {
-        LOGGER.info("Get country request: {}", Optional.ofNullable(request).map(GetCountryRequest::getName).orElse(null));
+        String country = Optional.ofNullable(request).map(GetCountryRequest::getName).orElse(null);
+        LOGGER.info("Get country request: {}", country);
 
         GetCountryResponse response = new GetCountryResponse();
-        response.setCountry(countryRepository.findCountry(request.getName()));
+        response.setCountry(countryRepository.findCountry(country));
 
         return response;
     }
